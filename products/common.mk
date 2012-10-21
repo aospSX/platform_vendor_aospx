@@ -12,6 +12,9 @@ KERNEL_MODULES_DIR:=/system/lib/modules
 # Tiny toolbox
 TINY_TOOLBOX:=true
 
+# T-Mobile theme engine
+include vendor/aospx/products/themes_common.mk
+
 # Bring in all audio files
 include frameworks/base/data/sounds/AllAudio.mk
 
