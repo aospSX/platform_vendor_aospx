@@ -33,6 +33,7 @@ PRODUCT_PACKAGES += \
     Camera \
     Calendar \
     CalendarProvider \
+    CellBroadcastReceiver \
     VideoEditor \
     VoiceDialer \
     SoundRecorder \
