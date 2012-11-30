@@ -10,19 +10,18 @@ cd $BUILD_ROOT
 
 # check if ccache is setup, if so; use it.
 # Unit "G" is gigabytes. Change to your space availability.
-if test ! -d /$BUILD_ROOT/.ccache ; then
+    export USE_CCACHE=1
+    export CCACHE_DIR=/$BUILD_ROOT/.ccache
+    prebuilt/linux-x86/ccache/ccache -M 20G #adjust to your preference
+if test -d /$CCACHE_DIR/ ; then
+    echo "Ccache initiated"
+else
     echo ""
     echo "You should look into using ccache:"
     echo "http://software.intel.com/en-us/articles/accelerating-compilation-part-1-ccache"
     echo "I recommend you install .ccache in your build root for the sake of this script"
     echo "If not, edit build_device.sh and correct '$ BUILD_ROOT' with your path"
     echo ""
-else
-    echo ""
-    echo "Ccache detected"
-    export USE_CCACHE=1
-    export CCACHE_DIR=/$BUILD_ROOT/.ccache
-    prebuilt/linux-x86/ccache/ccache -M 20G #adjust to your preference
 fi
 
 TARGET_VENDOR=$(echo $TARGET_PRODUCT | cut -f1 -d '_')
