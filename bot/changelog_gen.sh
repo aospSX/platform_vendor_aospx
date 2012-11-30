@@ -1,6 +1,8 @@
 #!/bin/sh
 
-# an example of how to use script-gen:./changelog_gen.sh 6/4/2012
+# an example of how to use script-gen:
+# ./vendor/aospx/bot/changelog_gen.sh 6/4/2012
+# try 'lunch' if problems occur
 
 sdate=${1}
 cdate=`date +"%m_%d_%Y"`
@@ -24,6 +26,7 @@ do
     project=$(git remote -v | head -n1 | awk '{print $2}' | sed 's/.*\///' | sed 's/\.git//')
     if [ ! -z "$log" ]; then
         # Write the changelog
+        mkdir "$ANDROID_PRODUCT_OUT"/system/etc/
         echo "Project name: $project" >> "$ANDROID_PRODUCT_OUT"/system/etc/Changelog_$cdate.txt
         echo "$log" | while read line
         do

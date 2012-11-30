@@ -1,16 +1,27 @@
 #!/bin/bash
 
+# you MUST make 'lunch' or run deploy.sh before attempting to build
+# example of use: ./vendor/aospx/bot/build_device.sh
+
 # $1 should be device name
 # select device and prepare varibles
 BUILD_ROOT=`pwd`
 cd $BUILD_ROOT
 
-#check if ccache is setup
-if test ! -d /$HOME/.ccache ; then
-    echo "You should look into using ccache."
+# check if ccache is setup, if so; use it.
+# Unit "G" is gigabytes. Change to your space availability.
+if test ! -d /$BUILD_ROOT/.ccache ; then
+    echo ""
+    echo "You should look into using ccache:"
+    echo "http://software.intel.com/en-us/articles/accelerating-compilation-part-1-ccache"
+    echo "I recommend you install .ccache in your build root for the sake of this script"
+    echo "If not, edit build_device.sh and correct '$ BUILD_ROOT' with your path"
+    echo ""
 else
+    echo ""
+    echo "Ccache detected"
     export USE_CCACHE=1
-    export CCACHE_DIR=/$HOME/.ccache
+    export CCACHE_DIR=/$BUILD_ROOT/.ccache
     prebuilt/linux-x86/ccache/ccache -M 20G #adjust to your preference
 fi
 

@@ -1,15 +1,21 @@
 #!/bin/bash
 
+# script locked, loaded, and ready to deploy on build day
+# examples of use: ./vendor/aospx/bot/deploy.sh
+#      make clean: ./vendor/aospx/bot/deploy.sh -c
+# only sync+lunch: ./vendor/aospx/bot/deploy.sh -s
+
 BUILD_ROOT=`pwd`
 cd $BUILD_ROOT
 repo sync
 . build/envsetup.sh
 
 # parse options
-while getopts ":c :o:" opt
+while getopts ":c :o: :s" opt
 do
     case "$opt" in
         c) CLEAN=true;;
+        s) STOP=true;;
         o)
              THEME_VENDOR="$OPTARG"
              echo "using $THEME_VENDOR vendorsetup.sh"
@@ -34,10 +40,11 @@ if [ -f platform_manifest/add_kernel_manifest.sh ]; then
 	./platform_manifest/add_kernel_manifest.sh
 fi
 
-# build packages
-#
-# read the file and execute lunch
-  lunch $1
+# execute lunch
+lunch
     # build_device <lunch combo>
-      ./vendor/aospx/bot/build_device.sh
-done
+    if [ "$STOP" = "true" ]; then
+        echo "stopping from full deployment"
+    else
+        ./vendor/aospx/bot/build_device.sh
+    fi
