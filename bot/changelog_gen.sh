@@ -38,7 +38,7 @@ done
 echo "Changelog Generated!"
 
 cd "$ANDROID_PRODUCT_OUT"
-zip -r aospX-1.0.0-MR1SG-*.zip system/etc/Changelog_$cdate.txt
+zip aospX-1.0.0-MR1SG-*.zip system/etc/Changelog_$cdate.txt
 echo "  to completed build..."
 echo "Complete."
 
